@@ -1,16 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import { App } from './components';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 // needed dependancies
 // applyMiddleware from redux
 // thunk from redux-thunk
 // logger from redux-logger
-// rootReducer from ./reducers
+// rootReducer from ./reducers--> this doesn't work
 
-const store = createStore(/* rootReducer */, /* applyMiddleware goes here */);
+// import { rootReducer } from './reducers/index';
+import { charsReducer } from './reducers/starWarsReducer';
+import './index.css';
+import { App } from './components';
+
+const middleware = applyMiddleware(thunk, logger);
+const store = createStore(charsReducer, middleware);
 
 ReactDOM.render(
   <Provider store={store}>
